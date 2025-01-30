@@ -14,9 +14,16 @@
             <th>Decision jusification</th>
           </tr>
       </thead> 
-      <tbody> 
+      <tbody>
+        <tr class="item" v-for="strequest in strequests" :key="strequest.id">
+          <td>{{ strequest.studentcode }} </td>
+          <td>{{ strequest.coursename}} </td>
+          <td>{{ strequest.coursecode}} </td>
+          <td>{{ strequest.studentrequest}} </td>
+          <td>{{ strequest.decision}} </td>
+          <td>{{ strequest.decisionjustification}} </td>
+        </tr>
 
-          
       </tbody> 
     </table>
     
@@ -66,5 +73,16 @@ h3 {
   width: 90%;
   display: flex;
   justify-content: center;
+}
+table tr{
+  background-color: grey;
+}
+table th, .table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+table th{
+  background-color: yellowgreen;
 }
 </style>
