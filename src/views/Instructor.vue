@@ -19,10 +19,10 @@
           <td>{{ strequest.coursename }}</td>
           <td>{{ strequest.coursecode }}</td>
           <td>{{ strequest.studentrequest }}</td>
-          <td><input type="text" id="decision"></td>
-          <td><input type="text" id="decision-justification"></td>
+          <td><input type="text" id="decision" v-model="decision"></td>
+          <td><input type="text" id="decision-justification" v-model="decisionJustification"></td>
           <td>
-            <button class="descision">Descision</button>
+            <button class="descision" @click="decide">Descision</button>
           </td>
         </tr>
         </tbody>
@@ -38,6 +38,8 @@ export default {
   data() {
     return {
       strequests: [],
+      decision: "",
+      decisionJustification: "",
     };
   },
   methods: {
@@ -46,6 +48,23 @@ export default {
           .then((response) => response.json())
           .then((data) => (this.strequests = data))
           .catch((err) => console.log(err.message));
+    },
+    decide() {
+      console.log("clicked!!");
+      fetch(`http://localhost:3000/api/decide`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(this.strequests[0]),
+      })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Success:", data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
     },
   },
   mounted() {
