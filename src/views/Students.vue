@@ -30,8 +30,8 @@
     </div>
   </div>
 
-  <h3>Submit a new request</h3>
-  <div class="container">
+  <h3  @click="showForm = !showForm">Submit a new request</h3>
+  <div class="container" id="requestForm" v-if="showForm">
     <table>
       <thead>
       <tr>
@@ -66,6 +66,7 @@ export default {
         coursecode: "",
         strequest: "",
       },
+      showForm: false,
     };
   },
   computed: {
