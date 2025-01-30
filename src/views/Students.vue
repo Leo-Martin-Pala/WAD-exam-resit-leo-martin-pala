@@ -49,7 +49,7 @@
         <td><input type="text" id="strequest" v-model="newrequest.strequest"></td>
       </tr>
       </tbody>
-      <button @click="sendFormData">Submit</button>
+      <button @click="sendFormData" :disabled="isFormFilled">Submit</button>
     </table>
   </div>
 </template>
@@ -67,6 +67,11 @@ export default {
         strequest: "",
       },
     };
+  },
+  computed: {
+    isFormFilled(){
+      return this.newrequest.stcode == "" || this.newrequest.coursename == "" || this.newrequest.coursecode == "" || this.newrequest.strequest == "";
+    }
   },
   methods: {
     sendFormData() {
