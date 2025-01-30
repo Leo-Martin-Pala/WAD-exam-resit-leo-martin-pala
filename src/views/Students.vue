@@ -29,6 +29,29 @@
       </table>
     </div>
   </div>
+
+  <h3>Submit a new request</h3>
+  <div class="container">
+    <table>
+      <thead>
+      <tr>
+        <th>Student code</th>
+        <th>Course name</th>
+        <th>Course code</th>
+        <th>Student request</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class="item">
+        <td><input type="text" id="stcode" v-model="newrequest.stcode"></td>
+        <td><input type="text" id="coursename" v-model="newrequest.coursename"></td>
+        <td><input type="text" id="coursecode" v-model="newrequest.coursecode"></td>
+        <td><input type="text" id="strequest" v-model="newrequest.strequest"></td>
+      </tr>
+      </tbody>
+      <button @click="sendFormData">Submit</button>
+    </table>
+  </div>
 </template>
 
 <script>
@@ -37,9 +60,32 @@ export default {
   data() {
     return {
       strequests: [],
+      newrequest: {
+        stcode: "",
+        coursename: "",
+        coursecode: "",
+        strequest: "",
+      },
     };
   },
   methods: {
+    sendFormData() {
+      console.log("clicked!!")
+      fetch(`http://localhost:3000/api/submitrequest`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(this.newrequest),
+      })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Success:", data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+    },
     fetchRecords() {
       fetch(`http://localhost:3000/api/requests`)
           .then((response) => response.json())
@@ -61,6 +107,7 @@ export default {
 </script>
 
 <style scoped>
+
 h1 {
   font-size: 20px;
 }
@@ -93,5 +140,10 @@ table th, .table td {
 
 table th {
   background-color: yellowgreen;
+}
+
+input {
+  width: 80%;
+  padding: 5px;
 }
 </style>

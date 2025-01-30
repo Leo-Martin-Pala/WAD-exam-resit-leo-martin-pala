@@ -27,3 +27,17 @@ app.get('/api/requests', async(req, res) => {
     }
 });
 
+app.post('/api/submitrequest', async(req, res) => {
+    try {
+        console.log("A POST request has arrived");
+        const { stcode, coursename, coursecode, strequest } = req.body;
+        const newRequest = await pool.query(
+            "INSERT INTO strequest (studentcode, coursename, coursecode, studentrequest) VALUES($1, $2, $3, $4) RETURNING *",
+            [stcode, coursename, coursecode, strequest]
+        );
+        res.json(newRequest.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
